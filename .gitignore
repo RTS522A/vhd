@@ -1,5 +1,5 @@
-mysql*
-virtio-win*
+hyper/virtio-win*
+
 *.tar
 *.gz
 *.zip
