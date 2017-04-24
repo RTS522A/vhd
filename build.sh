@@ -35,4 +35,4 @@ PowerShell  -Command  Dismount-DiskImage  -ImagePath  $PWD/virtio-win.iso
 ###################################################################
 echo "----- Build -----"
 cd ..
-docker build -t xjimmyshcn/nanoserver-hyper .
+docker build -t xjimmyshcn/nanoserver-hyper-iis .
