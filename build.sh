@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd hyper
-
 ###################################################################
 echo "----- Download virtio-win -----"
 curl -C - -O -s https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
@@ -35,4 +33,4 @@ PowerShell  -Command  Dismount-DiskImage  -ImagePath  $PWD/virtio-win.iso
 ###################################################################
 echo "----- Build -----"
 cd ..
-docker build -t xjimmyshcn/nanoserver-hyper-iis .
+docker build -t hyperhq/nanoserver-demo .

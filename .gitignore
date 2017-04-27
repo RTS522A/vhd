@@ -1,4 +1,4 @@
-hyper/virtio-win*
+virtio-win*
 
 *.tar
 *.gz
