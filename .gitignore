@@ -1,4 +1,5 @@
-virtio-win*
+drivers/virtio-win/**.pdb
+virtio-win.*
 
 *.tar
 *.gz
