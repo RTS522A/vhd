@@ -6,13 +6,13 @@ echo "##########################################"
 
 
 echo "----- show HyperStartSerivce in windows registry -----"
-winpty docker exec -it nano-hyper powershell 'REG QUERY HKLM\system\CurrentControlSet\Services\HyperStartSerivce'
+winpty docker exec -it nano-demo powershell 'REG QUERY HKLM\system\CurrentControlSet\Services\HyperStartSerivce'
 
 echo "----- show SerialPort in windows registry -----"
-winpty docker exec -it nano-hyper powershell 'REG QUERY HKEY_LOCAL_MACHINE\HARDWARE\DEVICEMAP\SERIALCOMM'
+winpty docker exec -it nano-demo powershell 'REG QUERY HKEY_LOCAL_MACHINE\HARDWARE\DEVICEMAP\SERIALCOMM'
 
 echo "----- show SerialPort via wmic -----"
-winpty docker exec -it nano-hyper powershell 'wmic path Win32_PnPEntity where "PNPClass=\'Ports\'" get "Name,PNPDeviceID,PNPClass,Status,Manufacturer,Service"'
+winpty docker exec -it nano-demo powershell 'wmic path Win32_PnPEntity where "PNPClass=\'Ports\'" get "Name,PNPDeviceID,PNPClass,Status,Manufacturer,Service"'
 
 echo "----- show process -----"
-winpty docker exec -it nano-hyper powershell Get-Process
+winpty docker exec -it nano-demo powershell Get-Process

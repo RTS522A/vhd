@@ -1,41 +1,25 @@
-FROM microsoft/nanoserver
-#REF: https://github.com/Microsoft/Virtualization-Documentation/blob/live/windows-container-samples/mysql/Dockerfile
+FROM microsoft/iis:nanoserver
+##################################################################################
+# dockerhub : https://hub.docker.com/r/microsoft/iis/
+# dockerfile: https://github.com/Microsoft/iis-docker/blob/master/nanoserver/Dockerfile
+##################################################################################
 
 ###########################################
-# add hyperstart.exe and serial port driver
+# add drivers
 ###########################################
-ADD hyper/hyperstart.exe /hyper/hyperstart.exe
-ADD hyper/reg /hyper/reg
-ADD hyper/msports-driver /hyper/msports-driver
-ADD hyper/virtio-win /hyper/virtio-win
+ADD drivers /drivers
 
-###########################################
-# install serial port driver
-###########################################
-RUN powershell -Command \
-  $ErrorActionPreference = 'Stop'; \
-	pnputil /add-driver 'c:\hyper\msports-driver\msports.inf' /install;
+# add serial port driver and network driver
+RUN pnputil /add-driver c:\\drivers\\msports-driver\\msports.inf /install
+RUN pnputil /add-driver c:\\drivers\\network-driver\\*.inf /subdirs /install
 
-###########################################
-# install virtio driver
-###########################################
-RUN powershell -Command \
-  $ErrorActionPreference = 'Stop'; \
-	pnputil /add-driver 'c:\hyper\virtio-win\Balloon\2k16\amd64\balloon.inf' /install; \
-	pnputil /add-driver 'c:\hyper\virtio-win\NetKVM\2k16\amd64\netkvm.inf' /install; \
-	pnputil /add-driver 'c:\hyper\virtio-win\pvpanic\2k16\amd64\pvpanic.inf' /install; \
-	pnputil /add-driver 'c:\hyper\virtio-win\vioinput\2k16\amd64\vioinput.inf' /install; \
-	pnputil /add-driver 'c:\hyper\virtio-win\viorng\2k16\amd64\viorng.inf' /install; \
-	pnputil /add-driver 'c:\hyper\virtio-win\vioscsi\2k16\amd64\vioscsi.inf' /install; \
-	pnputil /add-driver 'c:\hyper\virtio-win\vioserial\2k16\amd64\vioser.inf' /install; \
-	pnputil /add-driver 'c:\hyper\virtio-win\viostor\2k16\amd64\viostor.inf' /install
 
 ###########################################
 # install hyperstart service
 ###########################################
-RUN powershell -Command \
-  $ErrorActionPreference = 'Stop'; \
-	c:\hyper\hyperstart.exe -install;
+ADD hyper /hyper
+RUN c:\\hyper\\hyperstart.exe -install
 
-######################################
-CMD [ "ping localhost -t" ]
+EXPOSE 80
+CMD ["ping","-t","localhost"]
+ENTRYPOINT []
